@@ -80,7 +80,7 @@ if(HAVE_FFMPEG AND NOT HAVE_FFMPEG_WRAPPER AND NOT OPENCV_FFMPEG_SKIP_BUILD_CHEC
       OUTPUT_VARIABLE TRY_OUT
   )
   if(NOT __VALID_FFMPEG)
-    # message(FATAL_ERROR "FFMPEG: test check build log:\n${TRY_OUT}")
+    message(FATAL_ERROR "FFMPEG: test check build log:\n${TRY_OUT}")
     message(STATUS "WARNING: Can't build ffmpeg test code")
     set(HAVE_FFMPEG FALSE)
   endif()
