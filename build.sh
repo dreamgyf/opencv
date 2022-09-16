@@ -15,7 +15,7 @@ OUTPUT_PATH=`pwd`
 
 API=21
 TOOLCHAIN=$ANDROID_NDK/toolchains/llvm/prebuilt/linux-x86_64
-# 编译出的x264库地址
+# 编译出的ffmpeg库地址
 FFMPEG_ANDROID_DIR=/home/dreamgyf/compile/FFmpeg/_output_/product
 
 EXTRA_ATTRS="-DWITH_CUDA=OFF \
@@ -35,19 +35,19 @@ function build {
     if [[ $ABI == "armeabi-v7a" ]]; then
         ARCH="arm"
         TRIPLE="armv7a-linux-androideabi"
-        CROSS_PREFIX="arm-linux-androideabi"
+        TOOLCHAIN_NAME="arm-linux-androideabi"
     elif [[ $ABI == "arm64-v8a" ]]; then
         ARCH="arm64"
         TRIPLE="aarch64-linux-android"
-        CROSS_PREFIX="aarch64-linux-android"
+        TOOLCHAIN_NAME="aarch64-linux-android"
     elif [[ $ABI == "x86" ]]; then
         ARCH="x86"
         TRIPLE="i686-linux-android"
-        CROSS_PREFIX="i686-linux-android"
+        TOOLCHAIN_NAME="i686-linux-android"
     elif [[ $ABI == "x86-64" ]]; then
         ARCH="x86_64"
         TRIPLE="x86_64-linux-android"
-        CROSS_PREFIX="x86_64-linux-android"
+        TOOLCHAIN_NAME="x86_64-linux-android"
     else
         echo "Unsupported ABI ${ABI}!"
         exit 1
@@ -66,7 +66,7 @@ function build {
         -DANDROID_ABI=$ABI \
         -DANDROID_NDK=$ANDROID_NDK \
         -DANDROID_PLATFORM="android-${API}" \
-        -DANDROID_LINKER_FLAGS="-Wl,-rpath-link=$TOOLCHAIN/sysroot/usr/lib/$CROSS_PREFIX/$API" \
+        -DANDROID_LINKER_FLAGS="-Wl,-rpath-link=$TOOLCHAIN/sysroot/usr/lib/$TOOLCHAIN_NAME/$API" \
         -DBUILD_ANDROID_PROJECTS=OFF \
         -DBUILD_ANDROID_EXAMPLES=OFF \
         -DBUILD_SHARED_LIBS=$BUILD_SHARED_LIBS \
